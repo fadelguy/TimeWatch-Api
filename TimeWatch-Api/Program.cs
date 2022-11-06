@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ITimeWatchService, TimeWatchService>();
+builder.Services.AddSingleton<ITimeWatchLoginService, TimeWatchLoginService>();
 
 var app = builder.Build();
 

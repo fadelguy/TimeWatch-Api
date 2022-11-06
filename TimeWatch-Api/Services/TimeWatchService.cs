@@ -1,5 +1,5 @@
 ﻿using RestSharp;
-using System.Text.RegularExpressions;
+using System.Net;
 using TimeWatch_Api.Enums;
 using TimeWatch_Api.Interfaces;
 using TimeWatch_Api.Models;
@@ -8,57 +8,39 @@ namespace TimeWatch_Api.Services;
 
 public class TimeWatchService : ITimeWatchService
 {
-    private const string TimeWatchBaseUrl = "https://c.timewatch.co.il";
-    private const string TimeWatchLoginUrl = "user/validate_user.php";
-    private const string? TimeWatchPunchUrl = "punch/punch3.php";
+    private readonly ITimeWatchLoginService _timeWatchLoginService;
 
-    public void PunchIn(TimeWatchRequest request)
+    public TimeWatchService(ITimeWatchLoginService timeWatchLoginService)
     {
-        var loginResponse = Login(request);
-
-        Punch(request, loginResponse, ReportingOptions.PunchIn);
+        _timeWatchLoginService = timeWatchLoginService;
     }
 
-    public void PunchOut(TimeWatchRequest request)
+    public async Task<HttpStatusCode> PunchIn(TimeWatchRequest request)
     {
-        var loginResponse = Login(request);
+        var loginResponse = await _timeWatchLoginService.Login(request);
 
-        Punch(request, loginResponse, ReportingOptions.PunchOut);
+        if (!_timeWatchLoginService.ValidateLogin(loginResponse)) return HttpStatusCode.Unauthorized;
+
+       var punchResponse = await Punch(request, loginResponse, ReportingOptions.PunchIn);
+
+       return punchResponse.StatusCode;
     }
 
-    private TimeWatchLoginResponse Login(TimeWatchRequest twRequest)
+    public async Task<HttpStatusCode> PunchOut(TimeWatchRequest request)
     {
-        var client = new RestClient(TimeWatchBaseUrl);
-        var request = new RestRequest(TimeWatchLoginUrl, Method.Post);
-        request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-        request.AddParameter("comp", twRequest.Company);
-        request.AddParameter("name", twRequest.EmployeeId);
-        request.AddParameter("pw", twRequest.Password);
-        var response = client.Execute(request);
+        var loginResponse = await _timeWatchLoginService.Login(request);
 
-        var cookie = response.Cookies.First().Value;
+        if (!_timeWatchLoginService.ValidateLogin(loginResponse)) return HttpStatusCode.Unauthorized;
 
-        Regex ixEmploeeRegex = new Regex("<input(?:.*?)id=\\\"ixemplee\\\"(?:.*)value=\\\"([^\"]+).*>");
-        Regex tokenRegex = new Regex("<input(?:.*?)name=csrf_token(?:.*)value=\\\"([^\"]+).*>");
+        var punchResponse = await Punch(request, loginResponse, ReportingOptions.PunchOut);
 
-        var emploeeMatch = ixEmploeeRegex.Match(response.Content);
-        var ixEmploeeValue = emploeeMatch.Groups[1].Value;
-
-        var tokenMatch = tokenRegex.Match(response.Content);
-        var tokenValue = tokenMatch.Groups[1].Value;
-
-        return new TimeWatchLoginResponse
-        {
-            Cookie = cookie,
-            IxEmployee = ixEmploeeValue,
-            Token = tokenValue
-        };
+        return punchResponse.StatusCode;
     }
 
-    private void Punch(TimeWatchRequest twRequest, TimeWatchLoginResponse loginResponse, ReportingOptions reportingOptions)
+    private static Task<RestResponse> Punch(TimeWatchRequest twRequest, TimeWatchLoginResponse loginResponse, ReportingOptions reportingOptions)
     {
-        var client = new RestClient(TimeWatchBaseUrl);
-        var request = new RestRequest(TimeWatchPunchUrl, Method.Post);
+        var client = new RestClient(Consts.TimeWatchBaseUrl);
+        var request = new RestRequest(Consts.TimeWatchPunchUrl, Method.Post);
         request.AddHeader("content-type", "application/x-www-form-urlencoded");
         request.AddHeader("cookie", $"PHPSESSID={loginResponse.Cookie}");
         request.AddHeader("origin", "https://c.timewatch.co.il");
@@ -78,7 +60,7 @@ public class TimeWatchService : ITimeWatchService
         request.AddParameter("csrf_token", loginResponse.Token);
 
 
-        var response = client.Execute(request);
+        return client.ExecuteAsync(request);
     }
 }
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TimeWatch_Api.Interfaces;
 using TimeWatch_Api.Models;
 
@@ -19,16 +20,15 @@ public class TimeWatchController : ControllerBase
     }
 
     [HttpPost("punchIn")]
-    public IActionResult PunchIn(TimeWatchRequest request)
+    public Task<HttpStatusCode> PunchIn(TimeWatchRequest request)
     {
-        _timeWatchService.PunchIn(request);
-        return Ok();
+        return _timeWatchService.PunchIn(request);
+       
     }
 
     [HttpPost("punchOut")]
-    public IActionResult PunchOut(TimeWatchRequest request)
+    public Task<HttpStatusCode> PunchOut(TimeWatchRequest request)
     {
-        _timeWatchService.PunchOut(request);
-        return Ok();
+        return _timeWatchService.PunchOut(request);
     }
 }
