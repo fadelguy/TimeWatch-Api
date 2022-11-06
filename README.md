@@ -4,7 +4,7 @@ Tired of reporting working hours every day/month? <br>
 Now you can automatically report your working hours every day according to your location.
 
 ### What's this?
-This is a web api project that allow you to punch-in/punch-out to http://Timewatch.co.il
+This is a web api project that allow you to punch-in/punch-out to https://Timewatch.co.il
 
 ### How to use?
 This repository publish to https://time-watch.herokuapp.com <br>
