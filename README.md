@@ -18,7 +18,7 @@ You need to **Post** the following data: <br>
 
 ![timewatch](https://user-images.githubusercontent.com/32434449/200190918-b88ce304-2939-45f2-a5de-a0108013c9cf.jpg)
 
-## Example
+## IFTTT Example
 
 <p align="center">
 
