@@ -18,12 +18,20 @@ You need to **Post** the following data: <br>
 
 ![timewatch](https://user-images.githubusercontent.com/32434449/200190918-b88ce304-2939-45f2-a5de-a0108013c9cf.jpg)
 
+## PanchAll
+
+<p align="center">
+
+<img src="https://user-images.githubusercontent.com/32434449/204616974-19e95d3b-dfad-40e6-b94b-99c4f919655c.jpg">
+</p>
+
 ## IFTTT Example
 
 <p align="center">
 
 <img src="https://user-images.githubusercontent.com/32434449/200191177-d7d3306e-fe6b-4d2f-a5c2-b2512f2b86e2.jpg">
 </p>
+
 
 <p align="center">
 
