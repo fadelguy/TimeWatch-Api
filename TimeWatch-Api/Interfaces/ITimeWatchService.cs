@@ -7,5 +7,6 @@ public interface ITimeWatchService
 {
     Task<HttpStatusCode> PunchIn(TimeWatchRequest request);
     Task<HttpStatusCode> PunchOut(TimeWatchRequest request);
+    Task<HttpStatusCode> PunchAll(TimeWatchRequest request);
 }
 

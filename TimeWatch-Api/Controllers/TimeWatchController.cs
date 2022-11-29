@@ -31,4 +31,10 @@ public class TimeWatchController : ControllerBase
     {
         return _timeWatchService.PunchOut(request);
     }
+
+    [HttpPost("punchAll")]
+    public Task<HttpStatusCode> PunchAll(TimeWatchRequest request)
+    {
+        return _timeWatchService.PunchAll(request);
+    }
 }

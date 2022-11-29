@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ITimeWatchService, TimeWatchService>();
 builder.Services.AddSingleton<ITimeWatchLoginService, TimeWatchLoginService>();
+builder.Services.AddSingleton<IPunchService, PunchService>();
 
 var app = builder.Build();
 

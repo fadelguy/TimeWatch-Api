@@ -1,6 +1,6 @@
-﻿using RestSharp;
-using System.Net;
+﻿using System.Net;
 using TimeWatch_Api.Enums;
+using TimeWatch_Api.Extensions;
 using TimeWatch_Api.Interfaces;
 using TimeWatch_Api.Models;
 
@@ -9,10 +9,12 @@ namespace TimeWatch_Api.Services;
 public class TimeWatchService : ITimeWatchService
 {
     private readonly ITimeWatchLoginService _timeWatchLoginService;
+    private readonly IPunchService _punchService;
 
-    public TimeWatchService(ITimeWatchLoginService timeWatchLoginService)
+    public TimeWatchService(ITimeWatchLoginService timeWatchLoginService, IPunchService punchService)
     {
         _timeWatchLoginService = timeWatchLoginService;
+        _punchService = punchService;
     }
 
     public async Task<HttpStatusCode> PunchIn(TimeWatchRequest request)
@@ -21,7 +23,7 @@ public class TimeWatchService : ITimeWatchService
 
         if (!_timeWatchLoginService.ValidateLogin(loginResponse)) return HttpStatusCode.Unauthorized;
 
-       var punchResponse = await Punch(request, loginResponse, ReportingOptions.PunchIn);
+       var punchResponse = await _punchService.Punch(request, loginResponse, ReportingOptions.PunchIn);
 
        return punchResponse.StatusCode;
     }
@@ -32,35 +34,55 @@ public class TimeWatchService : ITimeWatchService
 
         if (!_timeWatchLoginService.ValidateLogin(loginResponse)) return HttpStatusCode.Unauthorized;
 
-        var punchResponse = await Punch(request, loginResponse, ReportingOptions.PunchOut);
+        var punchResponse = await _punchService.Punch(request, loginResponse, ReportingOptions.PunchOut);
 
         return punchResponse.StatusCode;
     }
 
-    private static Task<RestResponse> Punch(TimeWatchRequest twRequest, TimeWatchLoginResponse loginResponse, ReportingOptions reportingOptions)
+    public async Task<HttpStatusCode> PunchAll(TimeWatchRequest request)
     {
-        var client = new RestClient(Consts.TimeWatchBaseUrl);
-        var request = new RestRequest(Consts.TimeWatchPunchUrl, Method.Post);
-        request.AddHeader("content-type", "application/x-www-form-urlencoded");
-        request.AddHeader("cookie", $"PHPSESSID={loginResponse.Cookie}");
-        request.AddHeader("origin", "https://c.timewatch.co.il");
-        request.AddHeader("referer", "https://c.timewatch.co.il/punch/punch2.php");
-        request.AddParameter("comp", twRequest.Company);
-        request.AddParameter("name", twRequest.EmployeeId);
-        request.AddParameter("ix", loginResponse.IxEmployee);
-        request.AddParameter("type", $"{(int)reportingOptions}");
-        request.AddParameter("allowremarks", "1");
-        request.AddParameter("msgfound", "0");
-        request.AddParameter("thetask", "0");
-        request.AddParameter("teamleader", "0");
-        request.AddParameter("prevtask", "0");
-        request.AddParameter("defaultTask", "0");
-        request.AddParameter("withtasks", "0");
-        request.AddParameter("restricted", "1");
-        request.AddParameter("csrf_token", loginResponse.Token);
+        var loginResponse = await _timeWatchLoginService.Login(request);
 
+        if (!_timeWatchLoginService.ValidateLogin(loginResponse)) return HttpStatusCode.Unauthorized;
 
-        return client.ExecuteAsync(request);
+        request.SetDefaultValues();
+
+        var url = GetUrl(request, loginResponse.IxEmployee);
+
+        await _punchService.BeforePunchAll(request, loginResponse, url);
+
+        var workingDays = GetWorkingDays((int)request.Year, (int)request.Month);
+
+        foreach (var day in workingDays)
+        {
+            var punchResponse = await _punchService.PunchAll(request, loginResponse, day, url);
+
+            if(punchResponse.StatusCode != HttpStatusCode.OK) return punchResponse.StatusCode;
+
+            Thread.Sleep(1000);
+        }
+
+        return HttpStatusCode.OK;
+    }
+
+    private static List<DateTime> GetWorkingDays(int year, int month)
+    {
+        var dates = new List<DateTime>();
+
+        for (var date = new DateTime(year, month, 1); date.Month == month; date = date.AddDays(1))
+        {
+            if (date.DayOfWeek != DayOfWeek.Friday && date.DayOfWeek != DayOfWeek.Saturday)
+            {
+                dates.Add(date);
+            }
+        }
+
+        return dates;
+    }
+
+    private static string GetUrl(TimeWatchRequest request, string ixEmployee)
+    {
+        return $"{Consts.TimeWatchBaseUrl}/{Consts.TimeWatchEditUrl}?month={request.Month}&year={request.Year}&teamldr={ixEmployee}&empl_name={request.Company}";
     }
 }
 
