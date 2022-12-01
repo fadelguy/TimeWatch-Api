@@ -22,7 +22,7 @@ You need to **Post** the following data: <br>
 
 - https://time-watch.herokuapp.com/TimeWatch/punchAll
 
-``{"employeeId": "XXX", "company": "XXX", "password": "XXX", "startHour": "09", "endHour": "18", "year": 2022, month: 11} ``
+``{"employeeId": "XXX", "company": "XXX", "password": "XXX", "startHour": "09", "endHour": "18", "year": 2022, "month": 11} ``
 
 ** These parameters are optional and have default value:
 * startHour = "09"
