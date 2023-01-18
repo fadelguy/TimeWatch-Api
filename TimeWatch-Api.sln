@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeWatch-Api", "TimeWatch-Api\TimeWatch-Api.csproj", "{DB9D72BB-9B72-4AFA-BC77-1C1FA7490A04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeWatch-Api", "TimeWatch-Api\TimeWatch-Api.csproj", "{DB9D72BB-9B72-4AFA-BC77-1C1FA7490A04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeWatch.Service", "TimeWatch.Service\TimeWatch.Service.csproj", "{D632EA83-1222-4160-A547-C7E54582E7F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeWatch.Core", "TimeWatch.Core\TimeWatch.Core.csproj", "{C1AC3514-7221-4026-A38B-6CBE263D5D19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeWatch-ConsoleApp", "TimeWatch-ConsoleApp\TimeWatch-ConsoleApp.csproj", "{9B17C4EB-95D9-4CEB-A9C6-FAB915833303}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{DB9D72BB-9B72-4AFA-BC77-1C1FA7490A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB9D72BB-9B72-4AFA-BC77-1C1FA7490A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB9D72BB-9B72-4AFA-BC77-1C1FA7490A04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D632EA83-1222-4160-A547-C7E54582E7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D632EA83-1222-4160-A547-C7E54582E7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D632EA83-1222-4160-A547-C7E54582E7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D632EA83-1222-4160-A547-C7E54582E7F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1AC3514-7221-4026-A38B-6CBE263D5D19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1AC3514-7221-4026-A38B-6CBE263D5D19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1AC3514-7221-4026-A38B-6CBE263D5D19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1AC3514-7221-4026-A38B-6CBE263D5D19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B17C4EB-95D9-4CEB-A9C6-FAB915833303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B17C4EB-95D9-4CEB-A9C6-FAB915833303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B17C4EB-95D9-4CEB-A9C6-FAB915833303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B17C4EB-95D9-4CEB-A9C6-FAB915833303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

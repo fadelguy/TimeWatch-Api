@@ -1,4 +1,4 @@
-﻿namespace TimeWatch_Api.Models
+﻿namespace TimeWatch.Core.Models
 {
     public class TimeWatchLoginResponse
     {

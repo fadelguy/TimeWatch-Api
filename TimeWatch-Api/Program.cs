@@ -1,5 +1,4 @@
-using TimeWatch_Api.Interfaces;
-using TimeWatch_Api.Services;
+using TimeWatch.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ITimeWatchService, TimeWatchService>();
-builder.Services.AddSingleton<ITimeWatchLoginService, TimeWatchLoginService>();
-builder.Services.AddSingleton<IPunchService, PunchService>();
+builder.Services.AddTimeWatchService();
 
 var app = builder.Build();
 

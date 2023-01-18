@@ -1,4 +1,4 @@
-﻿namespace TimeWatch_Api.Extensions;
+﻿namespace TimeWatch.Service.Extensions;
 
 public static class DateTimeExtensions
 {

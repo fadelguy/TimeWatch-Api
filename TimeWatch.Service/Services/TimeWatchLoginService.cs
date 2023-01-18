@@ -1,9 +1,11 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net;
+using System.Text.RegularExpressions;
 using RestSharp;
-using TimeWatch_Api.Interfaces;
-using TimeWatch_Api.Models;
+using TimeWatch.Core;
+using TimeWatch.Core.Interfaces;
+using TimeWatch.Core.Models;
 
-namespace TimeWatch_Api.Services;
+namespace TimeWatch.Service.Services;
 
 public class TimeWatchLoginService : ITimeWatchLoginService
 {
@@ -19,7 +21,7 @@ public class TimeWatchLoginService : ITimeWatchLoginService
 
         var response = await client.ExecuteAsync(request);
 
-        var cookie = response.Cookies.First().Value;
+        var cookie = Enumerable.First<Cookie>(response.Cookies).Value;
 
         Regex ixEmploeeRegex = new Regex("<input(?:.*?)id=\\\"ixemplee\\\"(?:.*)value=\\\"([^\"]+).*>");
         Regex tokenRegex = new Regex("<input(?:.*?)name=csrf_token(?:.*)value=\\\"([^\"]+).*>");

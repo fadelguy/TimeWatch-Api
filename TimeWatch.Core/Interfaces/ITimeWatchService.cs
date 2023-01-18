@@ -1,7 +1,7 @@
 ﻿using System.Net;
-using TimeWatch_Api.Models;
+using TimeWatch.Core.Models;
 
-namespace TimeWatch_Api.Interfaces;
+namespace TimeWatch.Core.Interfaces;
 
 public interface ITimeWatchService
 {

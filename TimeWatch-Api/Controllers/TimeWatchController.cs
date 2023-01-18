@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using TimeWatch_Api.Interfaces;
-using TimeWatch_Api.Models;
+using TimeWatch.Core.Interfaces;
+using TimeWatch.Core.Models;
 
 namespace TimeWatch_Api.Controllers;
 

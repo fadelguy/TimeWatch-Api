@@ -1,8 +1,8 @@
 ﻿using RestSharp;
-using TimeWatch_Api.Enums;
-using TimeWatch_Api.Models;
+using TimeWatch.Core.Enums;
+using TimeWatch.Core.Models;
 
-namespace TimeWatch_Api.Interfaces;
+namespace TimeWatch.Core.Interfaces;
 
 public interface IPunchService
 {

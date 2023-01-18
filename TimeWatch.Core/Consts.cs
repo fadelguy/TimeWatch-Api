@@ -1,4 +1,4 @@
-﻿namespace TimeWatch_Api
+﻿namespace TimeWatch.Core
 {
     public class Consts
     {

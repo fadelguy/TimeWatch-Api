@@ -1,6 +1,6 @@
-﻿using TimeWatch_Api.Models;
+﻿using TimeWatch.Core.Models;
 
-namespace TimeWatch_Api.Extensions;
+namespace TimeWatch.Service.Extensions;
 
 public static class TimeWatchRequestExtensions
 {

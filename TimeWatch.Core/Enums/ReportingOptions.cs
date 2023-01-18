@@ -1,4 +1,4 @@
-﻿namespace TimeWatch_Api.Enums;
+﻿namespace TimeWatch.Core.Enums;
 
 public enum ReportingOptions
 {

@@ -1,10 +1,11 @@
 ﻿using RestSharp;
-using TimeWatch_Api.Enums;
-using TimeWatch_Api.Extensions;
-using TimeWatch_Api.Interfaces;
-using TimeWatch_Api.Models;
+using TimeWatch.Core;
+using TimeWatch.Core.Enums;
+using TimeWatch.Core.Interfaces;
+using TimeWatch.Core.Models;
+using TimeWatch.Service.Extensions;
 
-namespace TimeWatch_Api.Services;
+namespace TimeWatch.Service.Services;
 
 public class PunchService : IPunchService
 {
