@@ -33,6 +33,7 @@ namespace TimeWatch_ConsoleApp
                     return await timeWatchService.PunchOut(timeWatchRequest);
                 case "3":
                 case "punchall":
+                    Console.WriteLine("Working...");
                     return await timeWatchService.PunchAll(timeWatchRequest);
                 default:
                     return HttpStatusCode.BadRequest;
@@ -70,10 +71,12 @@ namespace TimeWatch_ConsoleApp
             if (timeWatchRequest.Command == "3")
             {
                 Console.WriteLine("Enter start hour (default is 09):");
-                timeWatchRequest.StartHour = Console.ReadLine();
+                var startHour = Console.ReadLine();
+                timeWatchRequest.StartHour = string.IsNullOrEmpty(startHour) ? null : startHour;
 
                 Console.WriteLine("Enter end hour (default is 18):");
-                timeWatchRequest.EndHour = Console.ReadLine();
+                var endHour = Console.ReadLine();
+                timeWatchRequest.EndHour = string.IsNullOrEmpty(endHour) ? null : endHour;
 
                 Console.WriteLine($"Enter year (default is {DateTime.Now.Year}):");
                 if (int.TryParse(Console.ReadLine(), out int year))
