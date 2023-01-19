@@ -30,10 +30,10 @@ namespace TimeWatch_ConsoleApp
                     return await timeWatchService.PunchIn(timeWatchRequest);
                 case "2":
                 case "punchout":
-                    return await timeWatchService.PunchIn(timeWatchRequest);
+                    return await timeWatchService.PunchOut(timeWatchRequest);
                 case "3":
                 case "punchall":
-                    return await timeWatchService.PunchIn(timeWatchRequest);
+                    return await timeWatchService.PunchAll(timeWatchRequest);
                 default:
                     return HttpStatusCode.BadRequest;
             }
