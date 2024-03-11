@@ -1,6 +1,5 @@
 ﻿namespace TimeWatch.Core.Models;
-
-public class TimeWatchRequest
+public class TimeWatchDetails
 {
     public string EmployeeId { get; set; }
     public string Company { get; set; }
@@ -9,4 +8,5 @@ public class TimeWatchRequest
     public string? EndHour { get; set; }
     public int? Year { get; set; }
     public int? Month { get; set; }
+    public string Command { get; set; }
 }
